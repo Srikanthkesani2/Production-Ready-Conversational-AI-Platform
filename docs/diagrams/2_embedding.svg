@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title{font-size:38px;font-weight:700;fill:#0f172a}
+      .sub{font-size:19px;fill:#475569}
+      .lbl{font-size:18px;font-weight:600;fill:#0f172a}
+      .small{font-size:14px;fill:#334155}
+      .mono{font-family:Consolas,Menlo,monospace;font-size:14px;fill:#1e293b}
+      .cap{font-size:17px;fill:#475569}
+      .tag{font-size:13px;fill:#475569}
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#f8fafc"/>
+  <text x="60" y="70" class="title">2 · What is Embedding?  (Text → Vectors)</text>
+  <text x="60" y="104" class="sub">Embedding converts text into a list of numbers (a vector) that captures its meaning — so a computer can compare meaning by math.</text>
+
+  <!-- Older methods panel -->
+  <rect x="60" y="150" width="330" height="200" rx="14" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+  <text x="80" y="185" class="lbl">Older ways (word counting)</text>
+  <text x="80" y="217" class="small">• Bag-of-Words (BoW) — counts words</text>
+  <text x="80" y="243" class="small">• TF-IDF — weights rare words</text>
+  <text x="80" y="269" class="small">• Word2Vec / GloVe — word vectors</text>
+  <text x="80" y="305" class="tag">Limitation: sparse &amp; mostly ignore</text>
+  <text x="80" y="325" class="tag">sentence meaning / word order.</text>
+
+  <!-- Modern method panel -->
+  <rect x="60" y="380" width="330" height="160" rx="14" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="415" class="lbl">Modern way (used here) ✅</text>
+  <text x="80" y="447" class="small">Sentence-Transformer model:</text>
+  <text x="80" y="475" class="mono">all-MiniLM-L6-v2</text>
+  <text x="80" y="503" class="small">Outputs a 384-dimension vector</text>
+  <text x="80" y="525" class="small">that captures full-sentence meaning.</text>
+
+  <!-- Pipeline: chunk -> model -> vector -> pinecone -->
+  <rect x="440" y="210" width="180" height="90" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="530" y="248" text-anchor="middle" class="small">Chunk text</text>
+  <text x="530" y="272" text-anchor="middle" class="tag">"The Transformer</text>
+  <text x="530" y="290" text-anchor="middle" class="tag">uses attention…"</text>
+
+  <line x1="622" y1="255" x2="682" y2="255" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="688" y="200" width="210" height="110" rx="12" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+  <text x="793" y="240" text-anchor="middle" class="lbl">Embedding Model</text>
+  <text x="793" y="266" text-anchor="middle" class="mono">all-MiniLM-L6-v2</text>
+  <text x="793" y="292" text-anchor="middle" class="small">(384 dimensions)</text>
+
+  <line x1="900" y1="255" x2="960" y2="255" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="966" y="210" width="254" height="90" rx="12" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="1093" y="245" text-anchor="middle" class="small">Vector (384 numbers)</text>
+  <text x="1093" y="275" text-anchor="middle" class="mono">[0.12, -0.04, 0.88, …]</text>
+
+  <!-- arrow down to pinecone -->
+  <line x1="1093" y1="302" x2="1093" y2="360" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Pinecone vector space -->
+  <rect x="440" y="380" width="780" height="220" rx="14" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="460" y="412" class="lbl">Stored in Pinecone (vector database)</text>
+  <text x="460" y="436" class="small">Similar meaning → vectors land close together in space</text>
+
+  <!-- cluster A -->
+  <circle cx="640" cy="510" r="7" fill="#06b6d4"/>
+  <circle cx="665" cy="495" r="7" fill="#06b6d4"/>
+  <circle cx="655" cy="535" r="7" fill="#06b6d4"/>
+  <circle cx="690" cy="520" r="7" fill="#06b6d4"/>
+  <text x="600" y="575" class="tag">"attention / transformers"</text>
+
+  <!-- cluster B -->
+  <circle cx="960" cy="500" r="7" fill="#ef4444"/>
+  <circle cx="985" cy="520" r="7" fill="#ef4444"/>
+  <circle cx="950" cy="535" r="7" fill="#ef4444"/>
+  <circle cx="1000" cy="495" r="7" fill="#ef4444"/>
+  <text x="930" y="575" class="tag">"cooking / recipes"</text>
+
+  <text x="60" y="690" class="cap">Same model embeds both the document chunks and the user's question — so they live in the same vector space.</text>
+</svg>

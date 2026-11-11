@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title{font-size:36px;font-weight:700;fill:#0f172a}
+      .sub{font-size:18px;fill:#475569}
+      .lbl{font-size:17px;font-weight:600;fill:#0f172a}
+      .small{font-size:13.5px;fill:#334155}
+      .mono{font-family:Consolas,Menlo,monospace;font-size:13px;fill:#1e293b}
+      .cap{font-size:16px;fill:#475569}
+      .step{font-size:14px;font-weight:700;fill:#0ea5e9}
+    </style>
+  </defs>
+
+  <rect width="1280" height="720" fill="#f8fafc"/>
+  <text x="50" y="62" class="title">3 · Retrieval &amp; Answer Generation (RAG)</text>
+  <text x="50" y="94" class="sub">When the user asks a question, we find the most relevant chunks and let the LLM answer using only those.</text>
+
+  <!-- Step 1: user query -->
+  <text x="50" y="140" class="step">STEP 1</text>
+  <rect x="50" y="150" width="220" height="90" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="160" y="188" text-anchor="middle" class="lbl">User Question</text>
+  <text x="160" y="214" text-anchor="middle" class="small">"Who wrote this paper?"</text>
+
+  <line x1="272" y1="195" x2="330" y2="195" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: embed query -->
+  <text x="336" y="140" class="step">STEP 2</text>
+  <rect x="336" y="150" width="230" height="90" rx="12" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+  <text x="451" y="182" text-anchor="middle" class="lbl">Embed the Query</text>
+  <text x="451" y="206" text-anchor="middle" class="small">same model: all-MiniLM-L6-v2</text>
+  <text x="451" y="228" text-anchor="middle" class="mono">→ 384-d vector</text>
+
+  <line x1="568" y1="195" x2="626" y2="195" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: similarity search -->
+  <text x="632" y="140" class="step">STEP 3</text>
+  <rect x="632" y="150" width="260" height="90" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="762" y="180" text-anchor="middle" class="lbl">Similarity Search</text>
+  <text x="762" y="204" text-anchor="middle" class="small">Pinecone · cosine similarity</text>
+  <text x="762" y="226" text-anchor="middle" class="mono">retrieve top-k = 6 chunks</text>
+
+  <line x1="894" y1="195" x2="952" y2="195" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3 result: top chunks -->
+  <rect x="958" y="150" width="270" height="40" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="970" y="175" class="small">Top chunk 1 (most similar)</text>
+  <rect x="958" y="198" width="270" height="40" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="970" y="223" class="small">Top chunk 2 …</text>
+
+  <!-- vector space mini -->
+  <rect x="632" y="270" width="260" height="150" rx="12" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="762" y="296" text-anchor="middle" class="small">vector space (closest = retrieved)</text>
+  <circle cx="762" cy="360" r="9" fill="#0ea5e9"/>
+  <text x="762" y="345" text-anchor="middle" class="mono">query</text>
+  <circle cx="720" cy="380" r="6" fill="#22c55e"/>
+  <circle cx="800" cy="345" r="6" fill="#22c55e"/>
+  <circle cx="805" cy="392" r="6" fill="#22c55e"/>
+  <circle cx="690" cy="330" r="6" fill="#cbd5e1"/>
+  <circle cx="845" cy="300" r="6" fill="#cbd5e1"/>
+
+  <!-- down arrow from top chunks to prompt -->
+  <line x1="1093" y1="240" x2="1093" y2="300" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: build prompt -->
+  <text x="50" y="470" class="step">STEP 4</text>
+  <rect x="50" y="480" width="560" height="180" rx="14" fill="#fef9c3" stroke="#eab308" stroke-width="2"/>
+  <text x="70" y="512" class="lbl">Build the Prompt</text>
+  <text x="70" y="542" class="small">• System rule: "Answer ONLY from the context below."</text>
+  <text x="70" y="568" class="small">• Context = the retrieved top-k chunks</text>
+  <text x="70" y="594" class="small">• Chat history (for follow-up questions)</text>
+  <text x="70" y="620" class="small">• The user's question</text>
+  <text x="70" y="648" class="mono">grounding = no outside knowledge, no hallucination</text>
+
+  <line x1="612" y1="570" x2="670" y2="570" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 5: LLM -->
+  <text x="676" y="470" class="step">STEP 5</text>
+  <rect x="676" y="480" width="230" height="180" rx="14" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="791" y="540" text-anchor="middle" class="lbl">LLM (Groq)</text>
+  <text x="791" y="568" text-anchor="middle" class="mono">llama-3.1-8b-instant</text>
+  <text x="791" y="600" text-anchor="middle" class="small">reads context +</text>
+  <text x="791" y="620" text-anchor="middle" class="small">writes the answer</text>
+
+  <line x1="908" y1="570" x2="966" y2="570" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: answer -->
+  <text x="972" y="470" class="step">STEP 6</text>
+  <rect x="972" y="480" width="256" height="180" rx="14" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="1100" y="536" text-anchor="middle" class="lbl">Grounded Answer</text>
+  <text x="1100" y="566" text-anchor="middle" class="small">accurate &amp; from the PDF</text>
+  <text x="1100" y="596" text-anchor="middle" class="small">+ "Sources used"</text>
+  <text x="1100" y="620" text-anchor="middle" class="small">(page citations)</text>
+
+  <!-- connect step3 chunks down into prompt area note -->
+  <text x="958" y="262" class="mono" fill="#16a34a">↓ these chunks become the context</text>
+</svg>

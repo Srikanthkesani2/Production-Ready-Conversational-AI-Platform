@@ -37,7 +37,7 @@ PDF ─▶ Loader ─▶ Chunking ─▶ Embeddings ─▶ Pinecone (vector DB)
 ### Tech stack
 | Layer        | Technology                                   |
 |--------------|----------------------------------------------|
-| UI           | Streamlit                                    |
+| UI           | Streamlit   accessble                                 |
 | Orchestration| LangChain                                    |
 | LLM          | Groq · `llama-3.1-8b-instant`                |
 | Embeddings   | HuggingFace · `all-MiniLM-L6-v2` (384-dim)  |

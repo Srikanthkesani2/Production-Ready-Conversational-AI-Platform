@@ -3,7 +3,7 @@
 A production-style **Retrieval-Augmented Generation (RAG)** chatbot. Upload one or
 more PDFs and have a multi-turn conversation grounded **strictly** in their
 content — with persistent vector storage in **Pinecone**, fast inference via
-**Groq**, and a ChatGPT-style UI built in **Streamlit**.
+**Groq**, and a ChatGPT-style UI built in **Streamlit**
 
 ---
 

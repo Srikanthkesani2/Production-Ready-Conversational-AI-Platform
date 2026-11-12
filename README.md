@@ -75,6 +75,7 @@ test, swap, or extend.
 ### 1. Get API keys (both have free tiers)
 - **Groq:** https://console.groq.com/keys
 - **Pinecone:** https://app.pinecone.io
+- use any other LLm for better assistence
 
 ### 2. Set up the environment
 ```bash
